@@ -1,8 +1,9 @@
 import json
-import time
+import re
+
+import requests
 
 from csu.gateway import req, baseRequestBody
-import requests
 
 
 def query_user_info(user_id):
@@ -34,3 +35,15 @@ def web_page_login(user_id):
         "tokenId": token_id
     })
     return web_sess
+
+
+def sso_redirect_with_channel(session, channel_name):
+    form_html = session.post(
+        "http://my.csu.edu.cn/portal/ssoRedirect.jsp?channelName=" + channel_name + "&continueURL=").text
+    action = re.search(r'action="(.*)"', form_html).group(1)
+    inputs = re.findall(r'input\sname="(.*?)" type="hidden" value="(.*?)"', form_html)
+    data = {}
+    for input_ in inputs:
+        data[input_[0]] = input_[1]
+    session.post(action, data)
+    return session
