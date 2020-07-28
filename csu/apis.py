@@ -11,7 +11,9 @@ def query_user_info(user_id):
 
 
 def find_user(keyword):
-    return req("findUser", {"keyword": str(keyword)})
+    res = req("findUser", {"keyword": str(keyword)})
+    for user in res['data']['users']:
+        yield [user['userId'], user['userName'], user['type'], user['dept']]
 
 
 def portal_login(token_id, user_id):
@@ -47,3 +49,7 @@ def sso_redirect_with_channel(session, channel_name):
         data[input_[0]] = input_[1]
     session.post(action, data)
     return session
+
+
+def scan_qr_code_login(token_id, user_id):
+    return portal_login(token_id, user_id)
