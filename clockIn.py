@@ -1,10 +1,11 @@
 import json
 import re
+import sys
 
 from csu.apis import sso_redirect_with_channel, web_page_login
 from utils import select_user, get_sys_name_from_login_url
 
-session = web_page_login(select_user())
+session = web_page_login(select_user(sys.argv[1]))
 session = sso_redirect_with_channel(session, get_sys_name_from_login_url("http://ca.its.csu.edu.cn/Home/Login/215"))
 
 main_page = session.get("https://wxxy.csu.edu.cn/ncov/wap/default/index?from=history").text

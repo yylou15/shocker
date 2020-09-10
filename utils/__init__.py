@@ -5,8 +5,12 @@ import requests
 from csu.apis import find_user
 
 
-def select_user():
-    users = list(find_user(input("输入姓名：")))
+def select_user(name):
+    if not name:
+        users = list(find_user(input("输入姓名：")))
+    else:
+        users = list(find_user(name))
+
     idx = 0
     if len(users) > 1:
         for user in users:
