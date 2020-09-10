@@ -47,7 +47,7 @@ def sso_redirect_with_channel(session, channel_name):
     data = {}
     for input_ in inputs:
         data[input_[0]] = input_[1]
-    session.post(action, data)
+    res = session.post(action, data)
     return session
 
 
