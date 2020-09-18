@@ -68,6 +68,6 @@ while True:
             page = bs4.BeautifulSoup(session.get("http://career.csu.edu.cn/melectronic/mstudent/otherWay").text,
                                      features="html.parser")
             print(page.find("tbody").getText().strip())
-    except:
+    except Exception:
         print("出现异常")
         continue

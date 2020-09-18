@@ -5,7 +5,7 @@ import requests
 from csu.apis import find_user
 
 
-def select_user(name):
+def select_user(name=None):
     if not name:
         users = list(find_user(input("输入姓名：")))
     else:
